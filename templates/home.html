@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block nav_home %}class="active"{% endblock %}
+
+{% block extra_css %}
+<style xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    /* Main marketing message and sign up button */
+    .jumbotron {
+    margin: 60px 0;
+    text-align: center;
+    }
+    .jumbotron h1 {
+    font-size: 72px;
+    line-height: 1;
+    }
+    .jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+    }
+</style>
+<link rel="stylesheet" href="/static/css/fontawesome.css">
+<!--[if IE 7]>
+<link rel="stylesheet" href="/static/css/fontawesome-ie7.css">
+<![endif]-->
+
+{% endblock %}
+
+{% block container %}
+    <div class="jumbotron">
+        <!--[if lt IE 9]>
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Warning!</strong> You are running a web browser not supported by the Web SIB Explorer.</br>
+            Note that things might work but bugs will NOT be fixed for the browser you are running!</br>
+            </br><i>Please upgrade your browser, <a href="http://www.google.com/chrome">Chrome</a> or <a href="http://www.firefox.com">Firefox</a> are good alternatives to what you are running now!</i>
+        </div>
+        <![endif]-->
+
+        <h1>Web SIB Explorer</h1>
+        <div class="span12">
+            {% if session.sib_ip %}
+            <h4 class="text-success">Click the links above to get started!</h4>
+            {% else %}
+            <h4 class="text-error">Enter a IP and press "Connect"!</h4>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="span4">
+            <h2><i class="icon-info-sign"></i> What is this?</h2>
+            <p>As I began using the Redland SIB I also tested the explorer.py application that was in the repository.
+                It worked, but had some drawbacks such as readability and no proper way of querying the SIB as the query could
+                only be written on one line. This program aims to fix those problems and implement some new features.</p>
+        </div>
+        <div class="span4">
+            <h2><i class="icon-exchange"></i> Connecting</h2>
+            <p>To connect to the SIB you can use either the IP or an IP:PORT combination.
+                The default port for connecting to the SIB is 10010, and it will be used if no port is supplied.
+                If you are only running <em>sib-tcp</em> locally, without any arguments, then you are running the SIB on
+                127.0.0.1:10010, and you can connect simply by typing <em>127.0.0.1</em>.</p>
+        </div>
+
+        <div class="span4">
+            <h2><i class="icon-wrench"></i> Development</h2>
+            <p>This program was developed by Frank Wickström at the
+                <a href="http://research.it.abo.fi/research/embedded-systems-laboratory">Embedded Systems Lab</a> at
+                <a href="http://www.abo.fi">Åbo Akademi University</a>.
+                This program comes with ABSOLUTELY NO WARRANTY.<br/>
+                This is free software, and you are welcome to redistribute it
+                under certain conditions; read the GPL license included with this program for more information.<br/>
+                If there are any questions regarding the software, feel free to contact Frank at frank.wickstrom[AT]abo.fi.
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span6">
+            <h2><i class="icon-exclamation-sign"></i> Limitations</h2>
+            <p>It should be noted that, while it has been proven to work most of the time, it is not recommended to use
+            the Web Explorer with really large data sets. Listings of all triples can take a long time, and some
+            timeouts might occur. The query capabilities however should work fine, at least when the results are kept
+            to the thousands and not tens of thousands or more. Subscribing when having a large data set in the SIB can
+            also result in errors, this seems to depend more the data in the SIB than the amount of triples.
+            While it has been tested to work with over 100000 triples, there might
+            be glitches that would lock up the "Subscriber" page when certain ontology's are loaded.</p>
+        </div>
+        <div class="span6">
+            <h2><i class="icon-thumbs-up"></i> Thanks</h2>
+            <p>A big thank you to the <a href="http://www.arces.unibo.it/"> ARCES </a> team at the
+                <a href="http://www.eng.unibo.it/PortaleEn/default.htm"> University of Bologna </a>, who has created the
+                <a href="http://sourceforge.net/projects/smart-m3/files/Smart-M3-RedSIB_0.4/">Redland Smart-M3</a> implementation.
+            Also a thank you to the original team over at Nokia, who created the original Smart-M3 implmentation. Thanks to
+                <a href="http://codemirror.net/"> CodeMirror </a> for the excellent code editor used in the Query page.</p>
+        </div>
+    </div>
+{% endblock %}

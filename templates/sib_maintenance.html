@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block nav_maintenance %}class="active"{% endblock %}
+
+{% block extra_css %}
+<link href="/static/css/bootstrap-fileupload.css" rel="stylesheet" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<link href="/static/css/bootstrap-select.css" rel="stylesheet">
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/bootstrap-fileupload.js"></script>
+<script src="/static/js/bootstrap-select.js"></script>
+
+<script>
+
+$('.clean_warning').clickover({
+    html: 'true',
+    placement: 'right',
+    content: '<div class="center"><span class="label label-important"> This will erase EVERYTHING!</span> <br/><br/> <a class="btn btn-danger" id="confirm_yes">Clean anyways</a> <button class="btn" data-dismiss="clickover" data-toggle="button">Cancel</button></div>',
+    title: "<h4>Are you sure?</h4>"
+}).click(function(){
+            $("#confirm_yes").click(function (){
+                $("#clean_form").submit();
+            });
+        });
+
+</script>
+
+
+<script>
+    $(document).ready(function(){updateInfo();});
+    $('.selectpicker').selectpicker();
+
+    $("#start_benchmark").click(function(){
+        $('#spinner').show();
+        $('#start_benchmark').removeClass('btn-primary');
+        $('#start_benchmark').addClass('btn-warning');
+        $('#start_benchmark').text("Benchmarking");
+    });
+
+    function updateOntologies() {
+        $.ajax({
+            type: "GET",
+            url: "/sib/maintenance/get/uploads",
+            beforeSend: function() {
+                $('#update_ontologies').hide();
+                $('#spinner').show();
+            },
+            success: function (data) {
+                var listItems = "";
+                var listItems2 = "";
+                $.each(data.ontologies.files, function(i, option) {
+                    listItems += "<option value='" + option + "'>" + option + "</option>";
+                    listItems2 += "<li rel='"+ i +"'> <a href='#' tabindex='-1'>"+ option +"</a>"
+                });
+                $("#uploaded_onts").html(listItems);
+                $('button').removeClass('disabled');
+                $('.btn-group.bootstrap-select .dropdown-menu ul').html(listItems2)
+                $('.filter-option.pull-left').text(data.ontologies.files[0])
+            },
+            complete: function() {
+                $('#update_ontologies').show();
+                $('#spinner').hide();
+            }
+        });
+    }
+
+    function updateInfo() {
+        $.ajax({
+            url: "/sib/maintenance/get/info",
+            type: 'GET',
+            async: false,
+            success: function (data) {
+                $('#sib_info #data_triples').text(data.info.count);
+            }
+        });
+    };
+
+    $("#submit_ontology").click(function(e){
+        var formData = new FormData($("form#ontology_form")[0]);
+
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: formData,
+            async: false,
+            beforeSend: function() {
+                $('#update_ontologies').hide();
+                $('#spinner').show();
+            },
+            success: function (data) {
+
+                setTimeout(function() {
+                    updateOntologies();
+                    if (data.results.success === false){
+                        if (data.results.extension === false) {
+                            $("#fileupload-text").html('<span class="label label-important">Upload failed: Wrong extension</span>');
+                        }
+                        else {
+                            $("#fileupload-text").html('<span class="label label-important">Upload failed: Server Error</span>');
+                        }
+                    }
+                    else {
+                        $("#fileupload-text").html('<span class="label label-success">File uploaded</span>');
+                    }
+                }, 1000);
+            },
+            cache: false,
+            contentType: false,
+            processData: false
+        });
+        return false;
+    });
+
+    $('#load_ontology').click(function(){
+
+        $.ajax({
+            url: window.location.pathname,
+            type: 'POST',
+            data: {
+                selected: $.trim($('button#uploaded_onts').text()),
+                action: 'load'
+            },
+            async: true,
+            beforeSend: function() {
+                $('#load_spinner').show();
+                $('#load_ontology').removeClass('btn-primary');
+                $('#load_ontology').addClass('btn-warning');
+                $('#load_ontology').text("Loading ontology");
+                $('#ontology_load_time').text("");
+            },
+            success: function (data) {
+                $('#load_spinner').hide();
+                $('#load_ontology').removeClass('btn-warning');
+                $('#load_ontology').addClass('btn-primary');
+                $('#load_ontology').text("Load");
+                $('#ontology_load_time').text("Loading took: "+ $.trim(data.results.time).substring(0,6)+" s");
+                updateInfo();
+            }
+        });
+
+        return false;
+    });
+
+    $("#update_ontologies").click(function(){
+       updateOntologies();
+    });
+
+
+    $("#how_done").popover({
+        html: true,
+        title: "<h4>How is it done</h4>",
+        content: $('#how_done_text').html(),
+        trigger: "hover",
+        placement: 'bottom'
+    })
+
+
+
+
+
+
+</script>
+{% endblock %}
+
+{% block container %}
+
+    <div class="row">
+        <div class="span6">
+            <h2>Maintenance:</h2>
+            <form method="post" id="ontology_form" action="/sib/maintenance" enctype="multipart/form-data">
+                <input type="hidden" name="action" value="upload">
+                <h4>Upload Ontology:</h4></span><div class="fileupload fileupload-new" data-provides="fileupload">
+                    <div class="input-append">
+                        <div class="uneditable-input span3">
+                            <i class="icon-file fileupload-exists"></i>
+                            <span class="fileupload-preview" id="fileupload-text"></span>
+                        </div>
+                        <button class="btn btn-primary fileupload-exists" data-dismiss="fileupload" id="submit_ontology">Upload</button>
+                        <span class="btn btn-info btn-file">
+                            <span class="fileupload-new">Upload ontology</span>
+                            <span class="fileupload-exists">Change</span>
+                            <input name="file" id="file" type="file" />
+                        </span>
+                        <a href="#" class="btn btn-danger fileupload-exists" data-dismiss="fileupload">Remove</a>
+                    </div>
+                </div>
+
+
+            </form>
+            <form method="post" id="load_form" action="/sib/maintenance" enctype="multipart/form-data">
+            <input type="hidden" name="action" value="load">
+            <h2>Load Ontology</h2>
+
+            <select class="selectpicker" id="uploaded_onts" {% if not ontologies %}disabled{% endif %}>
+            {% if not ontologies %}<option>No ontology avaliable</option>
+            {% else %}
+                {% for ontology in ontologies %}
+                <option value="{{ ontology }}">{{ ontology }}</option>
+                {% endfor %}
+
+            {% endif %}
+            </select>
+                <a href="#" id="update_ontologies"><i class="icon-refresh"></i> </a>
+                <img style="display: none" id="spinner" src="/static/img/ajax-loader.gif"/>
+                </br>
+            <button class="btn btn-primary" id="load_ontology">Load</button> <img style="display: none" id="load_spinner" src="/static/img/ajax-loader.gif"/>
+            <span id="ontology_load_time"></span>
+
+
+            </form>
+
+            <h2>Clean SIB</h2>
+            <form method="post" id="clean_form" action="/sib/maintenance">
+                <input type="hidden" name="action" value="clean">
+                <button class="btn btn-danger clean_warning">Clean SIB</button>
+            </form>
+
+
+        </div>
+        <div class="span4" id="sib_info">
+            <h2>SIB Info:</h2>
+            <ul class="unstyled">
+                <li><span class="info_title">Triples:</span> <span class="info_data" id="data_triples">{{ session.triple_count }}</span></li>
+                <li><span class="info_title">IP:</span> <span class="info_data">{{ session.sib_ip }}</span></li>
+            </ul>
+            <h2>KP Info:</h2>
+            <ul class="unstyled">
+                <li><span class="info_title">KP Member of:</span> {{ sh_info.member_of}}</li>
+                <li><span class="info_title">KP Connections:</span> {{ sh_info.connections}}</li>
+                <li><span class="info_title">KP Node ID:</span> {{ sh_info.node_id}}</li>
+                <li><span class="info_title">KP User Node ID:</span> {{ sh_info.user_node_id}}</li>
+            </ul>
+
+
+        </div>
+
+        <div class="span2 pull-right">
+            <span id="how_done" class="label label-info">How is it done <i class="icon-question-sign icon-white"></i></span>
+            <div id="how_done_text" style="display: none">
+                <h5>Uploading ontologies</h5>
+                Ontologies are uploaded the to "ontologies" directory in the root of this application. If you want to add
+                several ontologies at once i recommend adding ".owl" or ".rdf" files to that directory and press the refresh
+                button. This will load them up in the application and you can then load them into SIB.
+                <h5>Loading ontologies</h5>
+                Loading ontology files into the SIB is done with the m3_kp "send" command, with encoding set to "RDF-XML".
+                <h5>SIB cleaning</h5>
+                Cleaning the SIB is done by creating a remove transaction with the triple [None,None,None]. This will remove every triples
+                in the SIB.
+            </div>
+        </div>
+    </div>
+{% endblock %}

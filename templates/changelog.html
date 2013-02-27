@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block container %}
+
+
+    <div class="row">
+        <div class="span8">
+            <h2>Changelog:</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="hero-unit">
+            <div class="span4 pull-right">
+                <i class="icon-plus"></i> <span class="legend-info"> Added feature </span>
+                <i class="icon-asterisk"></i> <span class="legend-info"> Fix </span>
+            </div>
+
+            <h4>1.0 <span class="headerDate">(27.02.2013)</span></h4>
+            <p> <i class="icon-plus"></i> Added ability to list all triple hits of a subscription <br/>
+                <i class="icon-plus"></i> Added ability to pass IP and PORT arguments to the application at startup (Python 2.7 and above only) <br/>
+                <i class="icon-asterisk"></i> Now closes all subscriptions on exit <br/>
+                <i class="icon-asterisk"></i> Removed all debug info and getting ready for release <br/>
+                <i class="icon-asterisk"></i> Added missing icons to the front page
+
+            </p>
+
+            <h4>0.1.0 <span class="headerDate">(11.02.2013)</span> <span class="headerExtra">Internal</span></h4>
+            <p> <i class="icon-plus"></i> Added maintenance page. You can now load ontologies and clean the SIB <br/>
+                <i class="icon-asterisk"></i> A warning is now shown if you are running an IE version below 9 (You should not be running IE anyways)<br/>
+                <i class="icon-asterisk"></i> Set max upload limit to 20 MB
+            </p>
+
+
+            <h4>0.0.1 <span class="headerDate">(08.01.2013)</span> <span class="headerExtra">Internal</span></h4>
+            <p> <i class="icon-plus"></i> Added benchmark for subscriptions <br/>
+                <i class="icon-plus"></i> Added an "advanced" quick query <br/>
+                <i class="icon-asterisk"></i> The "Class tree" page now has a "How it is done" description <br/>
+                <i class="icon-asterisk"></i> Query results now shows a header <br/>
+                <i class="icon-asterisk"></i> Subscriber does not check the server for updates unless there are subscriptions active
+            </p>
+
+            <h4>0.0 <span class="headerDate">(19.12.2012)</span> <span class="headerExtra">Internal</span></h4>
+
+            <p>First internal release</p>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,21 @@
+
+# NOTE!!:
+# You will need to manually download and install the smart-m3 python KPI for this program to work!
+# Download the KPI from: http://sourceforge.net/projects/smart-m3/files/Smart-M3_B_v0.3.1-alpha/
+# The file is called something along the lines of smart-m3_pythonKP-0.X.X.tar.gz.
+# When you have extracted the package, run "python setup.py install" from inside the extracted folder.
+#
+# To install the rest of the requirements run "sudo pip install -r requirements.txt"
+#
+# If you don't have pip installed and is running
+#   Ubuntu: Run "sudo apt-get install python-pip" in a terminal
+#   Windows:
+#       1. Download and install setup-tools from http://pypi.python.org/pypi/setuptools
+#       2. Add setup-tools to your path by adding "C:\Python2X\Scripts" to your path. Remeber to change the path depending on your Python version.
+#       3. Run the following command in a command prompt "easy_install pip"
+#   OSx: Depending on your system you might have the "easy_install" command accessable for you. If so, run "sudo easy_install pip".
+
+# Flask lightweight web application framework
+flask>=0.9
+# SQLAlchmy support for Flask
+flask-sqlalchemy>=0.16

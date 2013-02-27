@@ -1,0 +1,156 @@
+<!--
+Web SIB Explorer created by Frank Wickström at the Embedded systems lab at Åbo Akademi University
+Copyright (C) 2012  Frank Wickström
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <title>Web SIB Explorer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/css/base.css" rel="stylesheet">
+    {% block extra_css %}
+    {% endblock %}
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+    <link href="/static/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/static/js/html5.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="shortcut icon" href="../assets/ico/favicon.ico">
+
+</head>
+
+<body>
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="/">Web SIB Explorer</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li {% block nav_home %}{% endblock %}><a href="/">Home</a></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Lists
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li {% block nav_all %}{% endblock %}><a href="/list/all">List everything</a></li>
+                            <li {% block nav_classes %}{% endblock %}><a href="/list/classes">Classes</a></li>
+                            <li {% block nav_properties %}{% endblock %}><a href="/list/properties">Properties</a></li>
+                        </ul>
+                    </li>
+                    <li {% block nav_class_tree %}{% endblock %}>
+                    {% if session.triple_count %}
+                        {% if session.triple_count > 5000 %}
+                            <a class="triple_warning" href="/list/classes/tree">Class tree</a>
+                        {% else %}
+                            <a href="/list/classes/tree">Class tree</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="/list/classes/tree">Class tree</a>
+                    {% endif %}
+                    </li>
+                    <li {% block nav_query %}{% endblock %}><a href="/query">Query</a></li>
+                    <li {% block nav_subscriber %}{% endblock %}><a href="/subscriber">Subscriber</a></li>
+                    <li {% block nav_benchmark %}{% endblock %}><a href="/sib/info">Benchmark</a></li>
+                    <li {% block nav_maintenance %}{% endblock %}><a href="/sib/maintenance">Maintenance</a></li>
+                </ul>
+
+                <form class="navbar-form pull-right" action="/sib/connection" method="post">
+                    <input name="sib_ip" id="sib_ip" type="text" class="span2"
+                           placeholder={% if session.sib_ip %}{{ session.sib_ip }}{% else %}"Enter SIB IP..."{% endif %}>
+                    {% if session.sib_ip %}
+                    <button type="submit" class="btn btn-success">Connected <img src="/static/img/ok.png"></button>
+                    {% else %}
+                    <button type="submit" class="btn btn-danger">Connect <img src="/static/img/error.png"></button>
+                    {% endif %}
+                    <span id="copyright">&copy;</span>
+                </form>
+
+            </div><!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+
+{% block pre_container %}
+
+<div class="container">
+    {% block container %}
+
+    {% endblock %}
+</div> <!-- /container -->
+
+{% endblock %}
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="/static/js/jquery.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/bootstrap-typeahead.js"></script>
+<script src="/static/js/bootstrapx-clickover.js"></script>
+
+<script>
+
+    $('.triple_warning').clickover({
+        html: 'true',
+        placement: 'bottom',
+        content: '<div class="center"><span class="label label-important"> {% if session.triple_count %}{{ session.triple_count }}{% endif %} triples in your database!</span> <a class="btn btn-danger" id="confirm_yes">Run anyways!</a> <button class="btn" data-dismiss="clickover" data-toggle="button">Close</button></div>',
+        title: "<h4>Are you sure?</h4>"
+    }).click(function(){
+               $("#confirm_yes").attr('href',$(this).attr('href'));
+            });
+
+    $("#copyright").clickover({
+        html: true,
+        title: "<h4>Copyright</h4>",
+        content: "Frank Wickström<br/>" +
+                "<a href='http://research.it.abo.fi/research/embedded-systems-laboratory'>Embedded Systems Lab</a><br/>" +
+                "<a href='http://www.abo.fi'>Åbo Akademi University</a><br/>" +
+                "License: <a href='http://opensource.org/licenses/GPL-3.0'>GPLv3</a><br/>" +
+                "WSE Version: 1.0.0<span class='headerExtra'></span> (<a href='/changelog'>Changelog</a>)<br/>",
+        trigger: "hover",
+        placement: 'bottom'
+    })
+
+</script>
+
+
+{% block extra_js %}
+{% endblock %}
+
+</body>
+</html>

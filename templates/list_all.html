@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block nav_all %}class="active"{% endblock %}
+
+{% block container %}
+    <div class="row">
+    <div class="span12">
+        <h2>Complete SIB:</h2>
+        <table class="table table-striped table-bordered">
+            <tr class="triple">
+                <th>Subject</th>
+                <th>Predicate</th>
+                <th>Object</th>
+            </tr>
+            {% for entry in entries %}
+                <tr class="triple"> {% for triple in entry %}
+                        <td>{{ triple.2 }}</td>{% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    </div>
+{% endblock %}

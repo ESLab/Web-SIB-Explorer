@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block nav_benchmark %}class="active"{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    $("#start_benchmark").click(function(){
+        $('#spinner').show();
+        $('#start_benchmark').removeClass('btn-primary');
+        $('#start_benchmark').addClass('btn-warning');
+        $('#start_benchmark').text("Benchmarking");
+    });
+
+
+    $("#how_done").popover({
+        html: true,
+        title: "<h4>How is it done</h4>",
+        content: $('#how_done_text').html(),
+        trigger: "hover",
+        placement: 'bottom'
+    })
+
+
+
+
+</script>
+{% endblock %}
+
+{% block container %}
+    {% if session.triple_count and  session.triple_count > 5000 %}
+
+    <div class="row">
+        <div class="span12">
+            <div class="alert alert-error fade in">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>Warning!</strong> There are {{ session.triple_count }} triples in your database, benchmarking will take a while!
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <div class="row">
+        <div class="span10">
+            <h2>SIB Benchmark:</h2>
+            <form method="post" action="/sib/info">
+                <button id="start_benchmark" class="btn btn-primary">Start benchmark</button>
+                <img style="display: none" id="spinner" src="/static/img/ajax-loader.gif"/>
+            </form>
+        </div>
+        <div class="span2 pull-right">
+            <span id="how_done" class="label label-info">How is it done <i class="icon-question-sign icon-white"></i></span>
+            <div id="how_done_text" style="display: none">
+            <h5>How the queries are made</h5>
+                The test are done by calling a python function with a query. The function then adds four lines of prefixes, then
+                creates a subscription transaction, makes the query, closes the transaction and returns the results.
+            <h5>Timing</h5>
+                The timing is done either by the taking the time difference of two "time.clock" on Windows or two "time.time"
+                clocks on Linux. One is started right before the function call, and is then subtracted from another clock
+                created at the end of the run.
+            <h5>More info</h5>
+                For the actual code, take a look at the source of "/libs/sib_handler.py".
+            </div>
+        </div>
+    </div>
+
+    <br/>
+
+    {% if info %}
+    <table class="table table-striped table-bordered">
+        <tr class="triple">
+            <th>Test</th>
+            <th>Time</th>
+            <th>Triples</th>
+        </tr>
+        {% for entry in info %}
+            <tr class="triple">
+                <td>{{ entry.name }}</td>
+                <td>{{ entry.time }}</td>
+                <td>{{ entry.length }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <div class="row">
+        <div class="span4">
+            <h4>What is queried?</h4>
+            <ul>
+                <li>
+                    Getting all triples
+                </li>
+                <li>
+                    Getting all classes
+                </li>
+                <li>
+                    Getting all properties
+                </li>
+                <li>
+                    Creating and closing 100 subscriptions
+                </li>
+            </ul>
+        </div>
+        <div class="span4">
+            <h4>Want to add more test?</h4>
+            You can add more test by adding to the <em>getSIBInfo</em> function in <em>/libs/sib_handler.py</em>
+        </div>
+    </div>
+    {% endif %}
+{% endblock %}

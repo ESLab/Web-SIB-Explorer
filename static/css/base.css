@@ -1,0 +1,126 @@
+#copyright {
+    font-size: 16px;
+    font-weight: bolder;
+    cursor: pointer;
+}
+
+.headerDate {
+    font-size: 10px;
+}
+
+.headerExtra {
+    font-size: 10px;
+    color: #55ab55;
+}
+
+.legend-info {
+    line-height: 20px;
+}
+
+.triple {
+    font-size: 10pt;
+}
+
+td.close_cell {
+    text-align: center;
+}
+
+.treeView{
+    -moz-user-select:none;
+    position:relative;
+}
+
+.treeView ul{
+    margin:0 0 0 -1.5em;
+    padding:0 0 0 1.5em;
+}
+
+.treeView ul ul{
+    background:url('../img/list-item-contents.png') repeat-y left;
+}
+
+.treeView li.lastChild > ul{
+    background-image:none;
+}
+
+.treeView li{
+    margin:0;
+    padding:0;
+    background:url('../img/list-item-root.png') no-repeat top left;
+    list-style-position:inside;
+    list-style-image:url('../img/button.png');
+    cursor:auto;
+}
+
+.treeView li.collapsibleListOpen{
+    list-style-image:url('../img/button-open.png');
+    cursor:pointer;
+}
+
+.treeView li.collapsibleListClosed{
+    list-style-image:url('../img/button-closed.png');
+    cursor:pointer;
+}
+
+.treeView li li{
+    background-image:url('../img/list-item.png');
+    padding-left:1.5em;
+}
+
+.treeView li.lastChild{
+    background-image:url('../img/list-item-last.png');
+}
+
+.treeView li.collapsibleListOpen{
+    background-image:url('../img/list-item-open.png');
+}
+
+.treeView li.collapsibleListOpen.lastChild{
+    background-image:url('../img/list-item-last-open.png');
+}
+
+.treeView ul.level_1 {
+    color:#2a2b2c;
+}
+
+.treeView ul.level_2 {
+    color:#2a4699;
+}
+
+.treeView ul.level_3 {
+    color:#992936;
+}
+
+.CodeMirror {
+    border:#2a2b2c solid thin;
+    margin-bottom: 10px;
+}
+
+.single_ns {
+    color:#3e3e3e;
+}
+
+.single_obj {
+    color:#992936;
+}
+
+.subscription-added {
+    color:#208710;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.subscription-removed {
+    color:#992936;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.info_title {
+    font-weight: bolder;
+    font-size: 16px;
+}

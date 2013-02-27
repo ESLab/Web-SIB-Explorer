@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block nav_subscriber %}class="active"{% endblock %}
+
+{% block container %}
+    <div class="row" xmlns="http://www.w3.org/1999/html">
+    <div class="span10">
+        <h2>{{ triple_type|capitalize }} triples:</h2>
+    </div>
+    </div>
+
+    <div class="row">
+        <div class="span12">
+            <h5>Subscription: {{ subscription.s }} {{ subscription.p }} {{ subscription.o }}</h5>
+            <h5>Hits: <a href="{{ url_for('subscriber_triples', page = 1, subscription=subscription.id, triple_type="added") }}"><span class="subscription-added">{{ subscription.added }}</span></a> / <a href="{{ url_for('subscriber_triples', page = 1, subscription=subscription.id, triple_type="removed") }}"><span class="subscription-removed">{{ subscription.removed }}</span></a></h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+
+            <table class="table table-striped table-bordered">
+                <tr class="triple">
+                    <th>Subject</th>
+                    <th>Predicate</th>
+                    <th>Object</th>
+                </tr>
+                {% for triple in triples.items %}
+                <tr class="triple">
+                    <td>{{ triple.s }}</td>
+                    <td>{{ triple.p }}</td>
+                    <td>{{ triple.o }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <div class="pagination">
+                <ul>
+                    {% for page in triples.iter_pages() %}
+                        {% if page == triples.page %}
+                            <li class="disabled"><a href="#">{{ page }}</a></li>
+                        {% else %}
+                            {% if page %}
+                            <li><a href="{{ url_for('subscriber_triples', page = page, subscription=subscription.id, triple_type=triple_type) }}">{{ page }}</a></li>
+                            {% else %}
+                            <li class="disabled"><a href="#">...</a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+
+{% block nav_class_tree %}class="active"{% endblock %}
+
+{% block extra_js %}
+    <script src="/static/js/collapsableList.js" xmlns="http://www.w3.org/1999/html"></script>
+
+
+    <script type="text/javascript">
+        CollapsibleLists.apply();
+        var orig_li = false;
+        var delete_controls = false;
+
+
+        $('.remove-object').click(function(e) {
+            e.preventDefault();
+            var orig = $(this);
+            var delete_controls = orig.parent('span');
+
+
+            var postdata = {
+                'object': $(delete_controls).attr('id')
+            };
+            $.ajax({
+                url: '/object/remove',
+                type: 'POST',
+                data: postdata,
+                success: function(data) {
+                }
+            });
+
+            delete_controls.parent('li:first').fadeOut();
+            return false;
+
+        });
+
+
+
+        $('.level_2 li').bind('mouseenter mouseleave', function(e){
+            var fade_type = e.type == 'mouseenter' ? 'fadeIn' : 'fadeOut';
+            $(this).find('a')[fade_type]();
+            orig_li = $(this);
+        });
+
+        $("#how_done").popover({
+            html: true,
+            title: "<h4>How is it done</h4>",
+            content: $('#how_done_text').html(),
+            trigger: "hover",
+            placement: 'bottom'
+        })
+
+    </script>
+
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+    <div class="span10">
+        <h2>Class tree:</h2>
+    </div>
+    <div class="span2 pull-right">
+        <span id="how_done" class="label label-info">How is it done <i class="icon-question-sign icon-white"></i></span>
+        <div id="how_done_text" style="display: none">
+            <h5>How is the classes created</h5>
+            The class three is constructed by using three difference queries.
+            <ol>
+                <li>Get all subjects (?s1) of type class.</li>
+                <li>Loop over s1 and get all subjects (?s2), where the object is ?s1.</li>
+                <li>Loop over s2 and get all predicates and objects, where the subjects is ?s2.</li>
+            </ol>
+
+            <h5>What will <i class="icon-remove"></i> remove</h5>
+            The <i class="icon-remove"></i> will remove the "object" or instance of a class.
+            Lets say you have a class User, and you also have an instance "User1" that is an instance of the class
+            User. Clicking the <i class="icon-remove"></i> will then remove the all triples where "User1" is either the
+            subject or the object of a triple.
+        </div>
+    </div>
+    </div>
+    <div class="row">
+    <ul class="treeView">
+        <li>Root
+            {% for key,value in entries.items() %}
+                <ul class="collapsibleList level_1">
+                    {% if loop.last %}
+                        <li class="lastChild">
+                            {% else %}
+                        <li>
+                    {% endif %}
+                    {{ key }}
+                    {% if value %}
+                    <ul class="level_2">
+                        {% for k,v in value.items() %}
+                            {% if loop.last %}
+                                <li class="lastChild">
+                                    {% else %}
+                                <li>
+                            {% endif %}
+                        {{ k }} <span class="delete-control" id="{{ k }}"><a href="#" class="remove-object" style="display:none"><i class="icon-remove"></i></a></span>
+                        {% if v %}
+                            <ul class="level_3">
+                                {% for k2,v2 in v.items() %}
+                                    {% if loop.last %}
+                                        <li class="lastChild">
+                                            {% else %}
+                                        <li>
+                                    {% endif %}
+                                {{ removeNS(k2) }} : {{ v2 }}
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                        </li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                    </li>
+                </ul>
+            {% endfor %}
+        </li>
+    </ul>
+    </div>
+{% endblock %}
