@@ -1,0 +1,915 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE rdf:RDF [
+	<!ENTITY rdf 'http://www.w3.org/1999/02/22-rdf-syntax-ns#'>
+	<!ENTITY rdfs 'http://www.w3.org/2000/01/rdf-schema#'>
+	<!ENTITY owl 'http://www.w3.org/2002/07/owl#'>
+	<!ENTITY xsd 'http://www.w3.org/2001/XMLSchema#'>
+	<!ENTITY blank 'http://notauri/blank#'>
+	<!ENTITY siip2p 'http://www.ducatienergia.com/SIIP2P.owl#'>
+]>
+<rdf:RDF xmlns:rdfs="&rdfs;" xmlns:owl="&owl;" xmlns:xsd="&xsd;" xmlns:blank="&blank;" xmlns:siip2p="&siip2p;" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+  <owl:NamedIndividual rdf:about="&blank;COC_1003682592">
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+  </owl:NamedIndividual>
+  <rdf:Description rdf:about="&blank;LampProfile_1354296590">
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296603" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296622" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296644" />
+  </rdf:Description>
+  <owl:NamedIndividual rdf:about="&blank;LIN_1977165703">
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+  </owl:NamedIndividual>
+  <rdf:Property rdf:about="http://sibnamespaces/hasPrefix">
+    <rdf:type rdf:resource="&rdf;Property" />
+  </rdf:Property>
+  <owl:Ontology rdf:about="http://www.ducatienergia.com/SIIP2P.owl">
+    <rdfs:comment>Ontologia per il sistema di illuminazione intelligenti punto-punto. Progetto la Citta' Pulita. Convenzione di ricerca tra Ducati Energia S.p.a e ARCES@it</rdfs:comment>
+    <owl:versionInfo>1.0@it</owl:versionInfo>
+  </owl:Ontology>
+  <owl:NamedIndividual rdf:about="&siip2p;BROKEN">
+    <rdf:type rdf:resource="&siip2p;LampStatus" />
+    <rdfs:label>BROKEN@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;Category">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Le sottoclassi di questa classe contengo elementi enumerabili (es. tipo di sensore, tipo di lampada, dati di identificazione)@it</rdfs:comment>
+    <rdfs:label>Category@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <owl:NamedIndividual rdf:about="&siip2p;CELSIUS">
+    <rdf:type rdf:resource="&siip2p;UnitOfMeasure" />
+    <rdfs:label>°C@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;CO">
+    <rdf:type rdf:resource="&siip2p;Measurand" />
+    <rdfs:comment>Grammi di CO@it</rdfs:comment>
+    <rdfs:label>CO@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;CO2">
+    <rdf:type rdf:resource="&siip2p;Measurand" />
+    <rdfs:comment>Grammi di CO2@it</rdfs:comment>
+    <rdfs:label>CO2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;COC">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Nodo di controllo relativo ad una singola strada@it</rdfs:comment>
+    <rdfs:label>COC@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Device" />
+  </owl:Class>
+  <siip2p:COC rdf:about="&siip2p;COC_1203191347">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1753108762" />
+    <siip2p:HasLampProfile rdf:resource="&siip2p;LampProfile_1354293169" />
+    <siip2p:HasLampProfile rdf:resource="&siip2p;LampProfile_1354296590" />
+    <siip2p:IsConnectedTo rdf:resource="&siip2p;LIN_1405509950" />
+    <siip2p:IsConnectedTo rdf:resource="&siip2p;LIN_73725912" />
+    <rdfs:label>Dummy COC 2@it</rdfs:label>
+  </siip2p:COC>
+  <owl:NamedIndividual rdf:about="&siip2p;COC_739797906">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1436607860" />
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1662454957" />
+    <siip2p:HasLampProfile rdf:resource="&siip2p;LampProfile_1313450472" />
+    <siip2p:IsConnectedTo rdf:resource="&siip2p;LIN_1931129302" />
+    <siip2p:IsConnectedTo rdf:resource="&siip2p;LIN_2131303765" />
+    <rdf:type rdf:resource="&siip2p;COC" />
+    <rdfs:label>COC 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;Data">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Classe che contiene tutti i dati@it</rdfs:comment>
+    <rdfs:label>Data@it</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="&siip2p;Device">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Rappresenta un dispositivo generico@it</rdfs:comment>
+    <rdfs:label>Device@it</rdfs:label>
+  </owl:Class>
+  <owl:Class rdf:about="&siip2p;DimmingMessage">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Messaggio inviato dal centro ad un COC (es. impostare dimming di un lampione)@it</rdfs:comment>
+    <rdfs:label>DimmingMessage@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Message" />
+  </owl:Class>
+  <siip2p:DimmingMessage rdf:about="&siip2p;DimmingMessage_1354807423">
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <siip2p:HasMessageDestination rdf:resource="&siip2p;COC_739797906" />
+    <siip2p:MessageForLIN rdf:resource="&siip2p;LIN_1931129302" />
+  </siip2p:DimmingMessage>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasActivationHour">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Rappresenta l'ora di settaggio del dimming nel seguente formato: CCYY-MM-DDThh:mm:ss@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;HourDimmingPair" />
+    <rdfs:label>HasActivationHour@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasAddress">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Stringa identificativa dell'indirizzo@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LocationData" />
+    <rdfs:label>HasAddress@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasDimmerValue">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Rappresenta il valore di dimming di una lampada@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;DimmingMessage" />
+    <rdfs:domain rdf:resource="&siip2p;HourDimmingPair" />
+    <rdfs:domain rdf:resource="&siip2p;Lamp" />
+    <rdfs:label>HasDimmerValue@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasHourDimmingPair">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Lega il profilo di una lampada alle varie coppie ora:dimming@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LampProfile" />
+    <rdfs:label>HasHourDimmingPair@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;HourDimmingPair" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasIdentificationData">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Consente di collegare un dispositivo ai propri dati identificativi@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;COC" />
+    <rdfs:domain rdf:resource="&siip2p;Lamp" />
+    <rdfs:domain rdf:resource="&siip2p;LIN" />
+    <rdfs:domain rdf:resource="&siip2p;ModemPLC" />
+    <rdfs:domain rdf:resource="&siip2p;Sensor" />
+    <rdfs:label>HasIdentificationData@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;IdentificationData" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasIdentificationType">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Tipo del dato identificativo@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>HasIdentificationType@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;IdentificationType" />
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasIdentificationValue">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Valore letterale di un dato identificativo@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>HasIdentificationValue@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasLamp">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Propriet? che collega un LIN alla lampada controllata@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LIN" />
+    <rdfs:label>HasLamp@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;Lamp" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasLampProfile">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Collega ogni singola strada (CIOC) con il suo profilo di illuminazione (ora:dimming)@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;COC" />
+    <rdfs:label>HasLampProfile@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;LampProfile" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasLampStatus">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Collega una lampada con il suo stato di funzionamento@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;Lamp" />
+    <rdfs:label>HasLampStatus@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;LampStatus" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasLampType">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Consente di specificare il tipo di lampada (es. SAP o LED)@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;Lamp" />
+    <rdfs:label>HasLampType@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;LampType" />
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasLatitude">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Latitudine espressa in gradi decimali@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LocationData" />
+    <rdfs:label>HasLatitude@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasLocationData">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Collega un elemento ai suoi dati di localizzazione@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LIN" />
+    <rdfs:label>HasLocationData@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;LocationData" />
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasLongitude">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Longitudine espressa in gradi decimali@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LocationData" />
+    <rdfs:label>HasLongitude@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasMeasurand">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Lega un dato fornito da un sensore con la grandezza misurata@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;SensorData" />
+    <rdfs:label>HasMeasurand@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;Measurand" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasMessageDestination">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Permette di specificare il destinatario di un messaggio@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;DimmingMessage" />
+    <rdfs:domain rdf:resource="&siip2p;Message" />
+    <rdfs:label>HasMessageDestination@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;COC" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasModemPLC">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Lega un COC o un LIN al relativo modem PLC@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;COC" />
+    <rdfs:domain rdf:resource="&siip2p;LIN" />
+    <rdfs:label>HasModemPLC@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;ModemPLC" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasSensor">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Proprieta' che stabilisce quali dispositivi hanno dei sensori@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;LIN" />
+    <rdfs:label>HasSensor@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;Sensor" />
+  </owl:ObjectProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasSensorData">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Propriet? che lega un sensore ai dati che fornisce@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;Sensor" />
+    <rdfs:label>HasSensorData@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;SensorData" />
+  </owl:ObjectProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasSensorDataValue">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Valore numerico della grandezza fisica misurata@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;SensorData" />
+    <rdfs:label>HasSensorDataValue@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:DatatypeProperty rdf:about="&siip2p;HasTimestamp">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Timestamp del dato rilevato da un sensore nel formato CCYY-MM-DDThh:mm:ss@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;SensorData" />
+    <rdfs:label>HasTimestamp@it</rdfs:label>
+  </owl:DatatypeProperty>
+  <owl:ObjectProperty rdf:about="&siip2p;HasUnitOfMeasure">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdf:type rdf:resource="&owl;FunctionalProperty" />
+    <rdfs:comment>Lega un dato di un sensore con la sua unita' di misura@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;SensorData" />
+    <rdfs:label>HasUnitOfMeasure@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;UnitOfMeasure" />
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="&siip2p;HourDimmingPair">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Rappresenta la coppia ora:dimming@it</rdfs:comment>
+    <rdfs:label>HourDimmingPair@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296590">
+    <siip2p:HasActivationHour>2012-11-30T19:20</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>12</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:45, HasDimmerValue:100@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296603">
+    <siip2p:HasActivationHour>2012-11-30T18:46</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>90</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:46, HasDimmerValue:90@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296622">
+    <siip2p:HasActivationHour>2012-11-30T18:46</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>90</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:46, HasDimmerValue:90@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296644">
+    <siip2p:HasActivationHour>2012-11-30T18:36</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>90</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:36, HasDimmerValue:90@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296828">
+    <siip2p:HasActivationHour>2012-11-30T19:15</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>0</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:36, HasDimmerValue:90@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296844">
+    <siip2p:HasActivationHour>2012-11-30T19:18</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>44</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:38, HasDimmerValue:95@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296914">
+    <siip2p:HasActivationHour>2012-11-30T19:21</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>0</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:46, HasDimmerValue:98@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296934">
+    <siip2p:HasActivationHour>2012-11-30T19:22</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>5</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:48, HasDimmerValue:83@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296948">
+    <siip2p:HasActivationHour>2012-11-30T19:23</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>0</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:49, HasDimmerValue:74@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354296964">
+    <siip2p:HasActivationHour>2012-11-30T19:24</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:51, HasDimmerValue:65@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354297108">
+    <siip2p:HasActivationHour>2012-11-30T15:19</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:53, HasDimmerValue:63@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354297211">
+    <siip2p:HasActivationHour>2012-11-30T19:19</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>0</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:42, HasDimmerValue:97@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354297940">
+    <siip2p:HasActivationHour>2012-11-30T15:20</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>0</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:54, HasDimmerValue:61@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354297952">
+    <siip2p:HasActivationHour>2012-11-30T15:22</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>33</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:55, HasDimmerValue:60@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <siip2p:HourDimmingPair rdf:about="&siip2p;HourDimmingPair_1354297968">
+    <siip2p:HasActivationHour>2012-11-30T16:35</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>50</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HasActivationHour:2012-11-30T18:56, HasDimmerValue:55@it</rdfs:label>
+  </siip2p:HourDimmingPair>
+  <owl:NamedIndividual rdf:about="&siip2p;HourDimmingPair_1646406980">
+    <siip2p:HasActivationHour>2012-10-31T19:00</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>50</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&siip2p;HourDimmingPair" />
+    <rdfs:label>HasActivationHour:2012-10-31T19:00 , HasDimmerValue:50@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;HourDimmingPair_1763727586">
+    <siip2p:HasActivationHour>2012-10-31T00:00</siip2p:HasActivationHour>
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <rdf:type rdf:resource="&siip2p;HourDimmingPair" />
+    <rdfs:label>HasActivationHour:2012-10-31T00:00 , HasDimmerValue:100@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;HUMIDITY">
+    <rdf:type rdf:resource="&siip2p;Measurand" />
+    <rdfs:label>Umidità@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;IdentificationData">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Serve per identificare i vari elementi@it</rdfs:comment>
+    <rdfs:label>IdentificationData@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1050270927">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;ZIGBEE" />
+    <siip2p:HasIdentificationValue>17219</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID EUTH SENS TH 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1152172326">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;ZIGBEE" />
+    <siip2p:HasIdentificationValue>16997</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID EUTH SENS CO@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1436607860">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;MAC" />
+    <siip2p:HasIdentificationValue>00:16:cb:a8:d6:81</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID COC1 MAC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1547251876">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;MAC" />
+    <siip2p:HasIdentificationValue>c8:60:00:4e:23:45</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID LIN1 MAC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1549678666">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;SERIALNUMBER" />
+    <siip2p:HasIdentificationValue>12345</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID LAMP LED@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1662454957">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;PLC" />
+    <siip2p:HasIdentificationValue>0C00</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID COC1 PLC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1724069275">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;PLC" />
+    <siip2p:HasIdentificationValue>0002</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID LIN2 PLC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1753108762">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;MAC" />
+    <siip2p:HasIdentificationValue>00:00:00:00:00:00</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID COC2 MAC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1797871617">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;ZIGBEE" />
+    <siip2p:HasIdentificationValue>64259</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID EUTH SENS TH 2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1826452598">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;PLC" />
+    <siip2p:HasIdentificationValue>0001</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID LIN1 PLC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1893505519">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;ZIGBEE" />
+    <siip2p:HasIdentificationValue>26836</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID EUTH SENS CO2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_1988377453">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;MAC" />
+    <siip2p:HasIdentificationValue>10:bf:48:06:b9:82</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID LIN2 MAC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;IdentificationData_435040722">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;SERIALNUMBER" />
+    <siip2p:HasIdentificationValue>6789</siip2p:HasIdentificationValue>
+    <rdf:type rdf:resource="&siip2p;IdentificationData" />
+    <rdfs:label>ID LAMP SAP@it</rdfs:label>
+  </owl:NamedIndividual>
+  <siip2p:IdentificationData rdf:about="&siip2p;IdentificationData_801423050">
+    <siip2p:HasIdentificationType rdf:resource="&siip2p;MAC" />
+    <siip2p:HasIdentificationValue>http://www.w3.org/2000/01/rdf-schema#literal</siip2p:HasIdentificationValue>
+    <rdfs:label>MAC Address COC2@it</rdfs:label>
+  </siip2p:IdentificationData>
+  <owl:Class rdf:about="&siip2p;IdentificationType">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Classe che contiene tutti i tipi di identificazione (es. MAC, ZigBee, RFID)@it</rdfs:comment>
+    <rdfs:label>IdentificationType@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Category" />
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="&siip2p;IsConnectedTo">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Propriet? che lega un COC ai LIN ad esso collegati@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;COC" />
+    <rdfs:label>IsConnectedTo@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;LIN" />
+  </owl:ObjectProperty>
+  <owl:Class rdf:about="&siip2p;Lamp">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Rappresenta una generica lampada@it</rdfs:comment>
+    <rdfs:label>Lamp@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Device" />
+  </owl:Class>
+  <siip2p:Lamp rdf:about="&siip2p;Lamp_1377441226">
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <siip2p:HasLampStatus rdf:resource="&siip2p;ON" />
+    <siip2p:HasLampType rdf:resource="&siip2p;LED" />
+    <rdfs:label>Lamp dummy 2@it</rdfs:label>
+  </siip2p:Lamp>
+  <siip2p:Lamp rdf:about="&siip2p;Lamp_1890492596">
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <siip2p:HasLampStatus rdf:resource="&siip2p;ON" />
+    <siip2p:HasLampType rdf:resource="&siip2p;LED" />
+    <rdfs:label>Lamp dummy 1@it</rdfs:label>
+  </siip2p:Lamp>
+  <owl:NamedIndividual rdf:about="&siip2p;Lamp_198652586">
+    <siip2p:HasDimmerValue>0</siip2p:HasDimmerValue>
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_435040722" />
+    <siip2p:HasLampStatus rdf:resource="&siip2p;OFF" />
+    <siip2p:HasLampType rdf:resource="&siip2p;SAP" />
+    <rdf:type rdf:resource="&siip2p;Lamp" />
+    <rdfs:label>SAP LAMP@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;Lamp_607025600">
+    <siip2p:HasDimmerValue>100</siip2p:HasDimmerValue>
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1549678666" />
+    <siip2p:HasLampStatus rdf:resource="&siip2p;BROKEN" />
+    <siip2p:HasLampType rdf:resource="&siip2p;LED" />
+    <rdf:type rdf:resource="&siip2p;Lamp" />
+    <rdfs:label>LED LAMP@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;LampProfile">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Rappresenta il profilo di una singola lampada, in cui vengono specificati i valori di intensita' relativi alle varie fasce orarie@it</rdfs:comment>
+    <rdfs:label>LampProfile@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <owl:NamedIndividual rdf:about="&siip2p;LampProfile_1313450472">
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1646406980" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1763727586" />
+    <rdf:type rdf:resource="&siip2p;LampProfile" />
+    <rdfs:label>Profilo lampada 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <siip2p:LampProfile rdf:about="&siip2p;LampProfile_1354296590">
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296590" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296828" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296844" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296914" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296934" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296948" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354296964" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354297108" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354297211" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354297940" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354297952" />
+    <siip2p:HasHourDimmingPair rdf:resource="&siip2p;HourDimmingPair_1354297968" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>Profilo Lampada LampProfile_1354296590@it</rdfs:label>
+  </siip2p:LampProfile>
+  <owl:Class rdf:about="&siip2p;LampStatus">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Gli individui di questa classe rappresentano i vari stati di funzionamento di una lampada (es. funzionante, guasta)@it</rdfs:comment>
+    <rdfs:label>LampStatus@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Category" />
+  </owl:Class>
+  <owl:Class rdf:about="&siip2p;LampType">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Permette di enumerare i diversi tipi di lampada@it</rdfs:comment>
+    <rdfs:label>LampType@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Category" />
+  </owl:Class>
+  <owl:NamedIndividual rdf:about="&siip2p;LED">
+    <rdf:type rdf:resource="&siip2p;LampType" />
+    <rdfs:label>LED@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;LIN">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Lampione intelligente@it</rdfs:comment>
+    <rdfs:label>LIN@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Device" />
+  </owl:Class>
+  <siip2p:LIN rdf:about="&siip2p;LIN_1405509950">
+    <siip2p:HasLamp rdf:resource="&siip2p;Lamp_1377441226" />
+    <siip2p:HasLocationData rdf:resource="&siip2p;LocationData_1038859083" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_1939867873" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_513540950" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_520064400" />
+    <rdfs:label>LIN 3 (Simulato)@it</rdfs:label>
+  </siip2p:LIN>
+  <owl:NamedIndividual rdf:about="&siip2p;LIN_1931129302">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1724069275" />
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1988377453" />
+    <siip2p:HasLamp rdf:resource="&siip2p;Lamp_198652586" />
+    <siip2p:HasLocationData rdf:resource="&siip2p;LocationData_1950116270" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_1916627666" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_933326795" />
+    <rdf:type rdf:resource="&siip2p;LIN" />
+    <rdfs:label>LIN 2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;LIN_2131303765">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1547251876" />
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1826452598" />
+    <siip2p:HasLamp rdf:resource="&siip2p;Lamp_607025600" />
+    <siip2p:HasLocationData rdf:resource="&siip2p;LocationData_1303599201" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_1341961817" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_1526572065" />
+    <rdf:type rdf:resource="&siip2p;LIN" />
+    <rdfs:label>LIN 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <siip2p:LIN rdf:about="&siip2p;LIN_73725912">
+    <siip2p:HasLamp rdf:resource="&siip2p;Lamp_1890492596" />
+    <siip2p:HasLocationData rdf:resource="&siip2p;LocationData_1213388216" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_1653293225" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_1776079306" />
+    <siip2p:HasSensor rdf:resource="&siip2p;Sensor_532454108" />
+    <rdfs:label>LIN 4 (Simulato)@it</rdfs:label>
+  </siip2p:LIN>
+  <owl:Class rdf:about="&siip2p;LocationData">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Dati relativi alla localizzazione dell'elemento (es. Lat, Lon, Indirizzo)@it</rdfs:comment>
+    <rdfs:label>LocationData@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <siip2p:LocationData rdf:about="&siip2p;LocationData_1038859083">
+    <siip2p:HasAddress>Via Antonio Cavalieri Ducati, 3</siip2p:HasAddress>
+    <siip2p:HasLatitude>44.517225</siip2p:HasLatitude>
+    <siip2p:HasLongitude>11.269782</siip2p:HasLongitude>
+    <rdfs:label>Location dummy LIN 2@it</rdfs:label>
+  </siip2p:LocationData>
+  <siip2p:LocationData rdf:about="&siip2p;LocationData_1213388216">
+    <siip2p:HasAddress>Via Antonio Cavalieri Ducati, 1-3</siip2p:HasAddress>
+    <siip2p:HasLatitude>44.518442</siip2p:HasLatitude>
+    <siip2p:HasLongitude>11.270576</siip2p:HasLongitude>
+    <rdfs:label>Location dummy LIN 1@it</rdfs:label>
+  </siip2p:LocationData>
+  <owl:NamedIndividual rdf:about="&siip2p;LocationData_1303599201">
+    <siip2p:HasAddress>Via Marco Emilio Lepido, 182, 40132 Bologna</siip2p:HasAddress>
+    <siip2p:HasLatitude>44.519637</siip2p:HasLatitude>
+    <siip2p:HasLongitude>11.266029</siip2p:HasLongitude>
+    <rdf:type rdf:resource="&siip2p;LocationData" />
+    <rdfs:label>Location LIN 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;LocationData_1454648517">
+    <siip2p:HasAddress>Via Marco Emilio Lepido, 182, 40132 Bologna</siip2p:HasAddress>
+    <siip2p:HasLatitude>44.519735</siip2p:HasLatitude>
+    <siip2p:HasLongitude>11.265879</siip2p:HasLongitude>
+    <rdf:type rdf:resource="&siip2p;LocationData" />
+    <rdfs:label>Location COC 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <siip2p:LocationData rdf:about="&siip2p;LocationData_1607319422">
+    <siip2p:HasAddress>Via Antonio Cavalieri Ducati, 1-3</siip2p:HasAddress>
+    <siip2p:HasLatitude>44.518442</siip2p:HasLatitude>
+    <siip2p:HasLongitude>11.270576</siip2p:HasLongitude>
+    <rdfs:label>Location COC 2@it</rdfs:label>
+  </siip2p:LocationData>
+  <owl:NamedIndividual rdf:about="&siip2p;LocationData_1950116270">
+    <siip2p:HasAddress>Via Marco Emilio Lepido, 182, 40132 Bologna</siip2p:HasAddress>
+    <siip2p:HasLatitude>44.519402</siip2p:HasLatitude>
+    <siip2p:HasLongitude>11.266702</siip2p:HasLongitude>
+    <rdf:type rdf:resource="&siip2p;LocationData" />
+    <rdfs:label>Location LIN 2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;MAC">
+    <rdf:type rdf:resource="&siip2p;IdentificationType" />
+    <rdfs:label>MAC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;Measurand">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Questa classe contiene le varie grandezze misurabili (es. temperatura, umidita', concentrazione, ...)@it</rdfs:comment>
+    <rdfs:label>Measurand@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Category" />
+  </owl:Class>
+  <owl:Class rdf:about="&siip2p;Message">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Messaggio di controllo generico@it</rdfs:comment>
+    <rdfs:label>Message@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <owl:ObjectProperty rdf:about="&siip2p;MessageForLIN">
+    <rdf:type rdf:resource="&rdf;Property" />
+    <rdfs:comment>Permette di specificare il LIN destinatario di un messaggio di dimming@it</rdfs:comment>
+    <rdfs:domain rdf:resource="&siip2p;DimmingMessage" />
+    <rdfs:label>MessageForLIN@it</rdfs:label>
+    <rdfs:range rdf:resource="&siip2p;LIN" />
+  </owl:ObjectProperty>
+  <owl:NamedIndividual rdf:about="&siip2p;MG">
+    <rdf:type rdf:resource="&siip2p;UnitOfMeasure" />
+    <rdfs:label>mg@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;ModemPLC">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Utilizzato per descrivere un modem PLC@it</rdfs:comment>
+    <rdfs:label>ModemPLC@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Device" />
+  </owl:Class>
+  <owl:NamedIndividual rdf:about="&siip2p;OFF">
+    <rdf:type rdf:resource="&siip2p;LampStatus" />
+    <rdfs:label>OFF@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;ON">
+    <rdf:type rdf:resource="&siip2p;LampStatus" />
+    <rdfs:label>ON@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;PERCENTAGE">
+    <rdf:type rdf:resource="&siip2p;UnitOfMeasure" />
+    <rdfs:label>%@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;PLC">
+    <rdf:type rdf:resource="&siip2p;IdentificationType" />
+    <rdfs:label>PLC@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;PPM">
+    <rdf:type rdf:resource="&siip2p;UnitOfMeasure" />
+    <rdfs:label>ppm@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;SAP">
+    <rdf:type rdf:resource="&siip2p;LampType" />
+    <rdfs:label>SAP@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;Sensor">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Rappresenta un generico sensore@it</rdfs:comment>
+    <rdfs:label>Sensor@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Device" />
+  </owl:Class>
+  <owl:NamedIndividual rdf:about="&siip2p;Sensor_1341961817">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1152172326" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_1985572284" />
+    <rdf:type rdf:resource="&siip2p;Sensor" />
+    <rdfs:label>EUTH SENS CO@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:NamedIndividual rdf:about="&siip2p;Sensor_1526572065">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1050270927" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_1618039605" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_829889475" />
+    <rdf:type rdf:resource="&siip2p;Sensor" />
+    <rdfs:label>EUTH SENS TH 1@it</rdfs:label>
+  </owl:NamedIndividual>
+  <siip2p:Sensor rdf:about="&siip2p;Sensor_1653293225">
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_2033747035" />
+    <rdfs:label>Dummy Sensor CO 1@it</rdfs:label>
+  </siip2p:Sensor>
+  <siip2p:Sensor rdf:about="&siip2p;Sensor_1776079306">
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_1159887309" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_1583858572" />
+    <rdfs:label>Dummy Sensor TH 1@it</rdfs:label>
+  </siip2p:Sensor>
+  <owl:NamedIndividual rdf:about="&siip2p;Sensor_1916627666">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1797871617" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_382267537" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_549971617" />
+    <rdf:type rdf:resource="&siip2p;Sensor" />
+    <rdfs:label>EUTH SENS TH 2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <siip2p:Sensor rdf:about="&siip2p;Sensor_1939867873">
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_2146689524" />
+    <rdfs:label>Dummy Sensor CO 2@it</rdfs:label>
+  </siip2p:Sensor>
+  <siip2p:Sensor rdf:about="&siip2p;Sensor_513540950">
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_1097876727" />
+    <rdfs:label>Dummy Sensor CO2 2@it</rdfs:label>
+  </siip2p:Sensor>
+  <siip2p:Sensor rdf:about="&siip2p;Sensor_520064400">
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_1891286719" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_498586098" />
+    <rdfs:label>Dummy Sensor TH 2@it</rdfs:label>
+  </siip2p:Sensor>
+  <siip2p:Sensor rdf:about="&siip2p;Sensor_532454108">
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_300701547" />
+    <rdfs:label>Dummy Sensor CO2 1@it</rdfs:label>
+  </siip2p:Sensor>
+  <owl:NamedIndividual rdf:about="&siip2p;Sensor_933326795">
+    <siip2p:HasIdentificationData rdf:resource="&siip2p;IdentificationData_1893505519" />
+    <siip2p:HasSensorData rdf:resource="&siip2p;SensorData_2065231613" />
+    <rdf:type rdf:resource="&siip2p;Sensor" />
+    <rdfs:label>EUTH SENS CO2@it</rdfs:label>
+  </owl:NamedIndividual>
+  <owl:Class rdf:about="&siip2p;SensorData">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Rappresenta i dati forniti dai sensori@it</rdfs:comment>
+    <rdfs:label>SensorData@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Data" />
+  </owl:Class>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_1097876727">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;CO2" />
+    <siip2p:HasSensorDataValue>fuori</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;THRESHOLD" />
+    <rdfs:label>CO2 dummy 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_1159887309">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;HUMIDITY" />
+    <siip2p:HasSensorDataValue>25</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;PERCENTAGE" />
+    <rdfs:label>Umidita' dummy 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_1583858572">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;TEMPERATURE" />
+    <siip2p:HasSensorDataValue>18</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;CELSIUS" />
+    <rdfs:label>Temperatura dummy 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_1618039605">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;HUMIDITY" />
+    <siip2p:HasSensorDataValue>29.17</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T16:23:16</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;PERCENTAGE" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HUM 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_1891286719">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;TEMPERATURE" />
+    <siip2p:HasSensorDataValue>16</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;CELSIUS" />
+    <rdfs:label>Temperatura dummy 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_1985572284">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;CO" />
+    <siip2p:HasSensorDataValue>entro</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T16:23:29</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;THRESHOLD" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>CO SENS 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_2033747035">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;CO" />
+    <siip2p:HasSensorDataValue>fuori</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;THRESHOLD" />
+    <rdfs:label>CO dummy 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_2065231613">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;CO2" />
+    <siip2p:HasSensorDataValue>entro</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T16:23:31</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;THRESHOLD" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>CO2 SENS 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_2146689524">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;CO" />
+    <siip2p:HasSensorDataValue>fuori</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;THRESHOLD" />
+    <rdfs:label>CO dummy 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_300701547">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;CO2" />
+    <siip2p:HasSensorDataValue>entro</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;THRESHOLD" />
+    <rdfs:label>CO2 dummy 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_382267537">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;HUMIDITY" />
+    <siip2p:HasSensorDataValue>33.08</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T16:23:11</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;PERCENTAGE" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>HUM 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_498586098">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;HUMIDITY" />
+    <siip2p:HasSensorDataValue>20</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T19:51:15</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;PERCENTAGE" />
+    <rdfs:label>Umidita' dummy 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_549971617">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;TEMPERATURE" />
+    <siip2p:HasSensorDataValue>24.04</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T16:23:11</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;CELSIUS" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>TEMP 2@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:SensorData rdf:about="&siip2p;SensorData_829889475">
+    <siip2p:HasMeasurand rdf:resource="&siip2p;TEMPERATURE" />
+    <siip2p:HasSensorDataValue>26.97</siip2p:HasSensorDataValue>
+    <siip2p:HasTimestamp>2012-12-06T16:23:16</siip2p:HasTimestamp>
+    <siip2p:HasUnitOfMeasure rdf:resource="&siip2p;CELSIUS" />
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>TEMP 1@it</rdfs:label>
+  </siip2p:SensorData>
+  <siip2p:IdentificationType rdf:about="&siip2p;SERIALNUMBER">
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>SERIALNUMBER@it</rdfs:label>
+  </siip2p:IdentificationType>
+  <siip2p:Measurand rdf:about="&siip2p;TEMPERATURE">
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>Temperatura@it</rdfs:label>
+  </siip2p:Measurand>
+  <siip2p:UnitOfMeasure rdf:about="&siip2p;THRESHOLD">
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>soglia@it</rdfs:label>
+  </siip2p:UnitOfMeasure>
+  <owl:Class rdf:about="&siip2p;UnitOfMeasure">
+    <rdf:type rdf:resource="&rdfs;Class" />
+    <rdfs:comment>Gli individui di questa classe rappresentano le varie unita' di misura@it</rdfs:comment>
+    <rdfs:label>UnitOfMeasure@it</rdfs:label>
+    <rdfs:subClassOf rdf:resource="&siip2p;Category" />
+  </owl:Class>
+  <siip2p:IdentificationType rdf:about="&siip2p;ZIGBEE">
+    <rdf:type rdf:resource="&owl;NamedIndividual" />
+    <rdfs:label>ZIGBEE@it</rdfs:label>
+  </siip2p:IdentificationType>
+  <rdfs:Class rdf:about="&rdf;Property">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdf:Property rdf:about="&rdfs;comment">
+    <rdf:type rdf:resource="&rdf;Property" />
+  </rdf:Property>
+  <rdf:Property rdf:about="&rdfs;label">
+    <rdf:type rdf:resource="&rdf;Property" />
+  </rdf:Property>
+  <rdfs:Class rdf:about="&owl;Class">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdfs:Class rdf:about="&owl;DatatypeProperty">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdfs:Class rdf:about="&owl;FunctionalProperty">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdfs:Class rdf:about="&owl;NamedIndividual">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdfs:Class rdf:about="&owl;ObjectProperty">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdfs:Class rdf:about="&owl;Ontology">
+    <rdf:type rdf:resource="&rdfs;Class" />
+  </rdfs:Class>
+  <rdf:Property rdf:about="&owl;versionInfo">
+    <rdf:type rdf:resource="&rdf;Property" />
+  </rdf:Property>
+</rdf:RDF>
