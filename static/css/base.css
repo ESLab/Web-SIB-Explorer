@@ -13,6 +13,11 @@
     color: #55ab55;
 }
 
+.headerExperimental {
+    font-size: 10px;
+    color: #b90a28;
+}
+
 .legend-info {
     line-height: 20px;
 }

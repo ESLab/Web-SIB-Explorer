@@ -84,7 +84,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                     {% endif %}
                     </li>
                     <li {% block nav_query %}{% endblock %}><a href="/query">Query</a></li>
-                    <li {% block nav_subscriber %}{% endblock %}><a href="/subscriber">Subscriber</a></li>
+
+
+                    <li class="dropdown {% block nav_subscriber %}{% endblock %}">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Subscribers
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li {% block nav_subscriber_rdf %}{% endblock %}><a href="/subscriber">RDF</a></li>
+                            <li {% block nav_subscriber_sparql %}{% endblock %}><a href="/subscriber/sparql">SPARQL <span class="label label-important">Exprimental</span></a></li>
+                        </ul>
+                    </li>
+
                     <li {% block nav_benchmark %}{% endblock %}><a href="/sib/info">Benchmark</a></li>
                     <li {% block nav_maintenance %}{% endblock %}><a href="/sib/maintenance">Maintenance</a></li>
                 </ul>
@@ -141,7 +153,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 "<a href='http://research.it.abo.fi/research/embedded-systems-laboratory'>Embedded Systems Lab</a><br/>" +
                 "<a href='http://www.abo.fi'>Åbo Akademi University</a><br/>" +
                 "License: <a href='http://opensource.org/licenses/GPL-3.0'>GPLv3</a><br/>" +
-                "WSE Version: 1.0.0<span class='headerExtra'></span> (<a href='/changelog'>Changelog</a>)<br/>",
+                "WSE Version: 1.1.0<span class='headerExtra'></span> (<a href='/changelog'>Changelog</a>)<br/>",
         trigger: "hover",
         placement: 'bottom'
     })

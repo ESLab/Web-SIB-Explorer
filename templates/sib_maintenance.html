@@ -229,7 +229,7 @@ $('.clean_warning').clickover({
             <h2>KP Info:</h2>
             <ul class="unstyled">
                 <li><span class="info_title">KP Member of:</span> {{ sh_info.member_of}}</li>
-                <li><span class="info_title">KP Connections:</span> {{ sh_info.connections}}</li>
+                <li><span class="info_title">KP Connections:</span><br/> {% for connection in  sh_info.connections %}({{ connection.1.tr_type }} - {{ connection.1.node_id }})<br/> {% endfor  %}</li>
                 <li><span class="info_title">KP Node ID:</span> {{ sh_info.node_id}}</li>
                 <li><span class="info_title">KP User Node ID:</span> {{ sh_info.user_node_id}}</li>
             </ul>

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block nav_subscriber %}class="active"{% endblock %}
+{% block nav_subscriber%}active{% endblock %}
 
 {% block extra_js %}
 
@@ -105,7 +105,7 @@
 {% block container %}
     <div class="row">
         <div class="span10">
-            <h2>Subscriber:</h2>
+            <h2>RDF Subscriber:</h2>
         </div>
         <div class="span2 pull-right">
             <span id="how_done" class="label label-info">How is it done <i class="icon-question-sign icon-white"></i></span>
@@ -118,8 +118,8 @@
                 the input field.
             <h5>URIs & Literals</h5>
                 The object field is paresd as an URI if it includes a "#" (hash) symbol. Otherwise is will be viewed as a literal.
-            <h5>SPARQL Subscriptions</h5>
-                Subscriptions made in SPARQL will be supported when the python KPI is a bit more polished for the use of such subscriptions.
+            <h5>Results</h5>
+                Click on the green and red numbers in the "hits" column to view the results.
             </div>
         </div>
     </div>

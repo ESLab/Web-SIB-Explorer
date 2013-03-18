@@ -45,6 +45,7 @@ from functools import wraps
 from libs.sib_handler import *
 import os
 from uuid import uuid4
+import time
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -70,17 +71,22 @@ class Subscription(db.Model):
     o = db.Column(db.String(150))
     added = db.Column(db.Integer)
     removed = db.Column(db.Integer)
+    sub_type = db.Column(db.String(10))
+    sparql_query = db.Column(db.String(350))
 
-    def __init__(self, id, s,p,o, added, removed):
+    def __init__(self, id, s,p,o, added, removed, sub_type, sparql_query):
         self.id = id
         self.s = s
         self.p = p
         self.o = o
         self.added = added
         self.removed = removed
+        self.sparql_query = sparql_query
+        self.sub_type = sub_type
 
     def __repr__(self):
-        return 'Subscription...'
+        return "test"
+        #return 'Triple: s: ',self.s," p: ",self.p," o: ",self.o," added: ",str(self.added)," removed: ",str(self.removed), "sub_type: ",self.sub_type
 
 
 class Triple(db.Model):
@@ -100,14 +106,23 @@ class Triple(db.Model):
 
 
     def __repr__(self):
-        return 'Triple...'
+        return 'Triple: s: ',self.s," p: ",self.p," o: ",self.o," type: ",self.triple_type
 
 # HELPER FUCNTIONS
 def allowed_file(filename):
+    """
+    Checks if a uploaded file has the right extension
+
+    :param filename: File to check
+    """
     return '.' in filename and\
            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
 def cleanup():
+    """
+    Closes all connections to the SIB on exit
+
+    """
     global SH
     if SH:
         subscriptions = Subscription.query.all()
@@ -117,6 +132,7 @@ def cleanup():
                 s.unsubscribe(subscription.id)
             except Exception, e:
                 print e
+
 
 # SMART-M3
 
@@ -129,25 +145,54 @@ class SubHandler():
         self.o = kwargs.get('object',None)
         self.id = kwargs.get('id',str(uuid4()))
 
+        self.sparql_query = kwargs.get('sparql_query', None)
 
-        self.subscription = Subscription(self.id, self.s, self.p, self.o, 0, 0,)
+        self.sub_type = kwargs.get('sub_type','rdf')
+
+        self.subscription = Subscription(self.id, self.s, self.p, self.o, 0, 0, self.sub_type, self.sparql_query)
+
         db.session.add(self.subscription)
         db.session.commit()
 
     def handle(self, added, removed):
         subscription = Subscription.query.filter_by(id=self.id).first()
+
         subscription.added += len(added)
         subscription.removed += len(removed)
         db.session.commit()
 
         for trip in added:
-            triple = Triple(self.id, trip[0], trip[1], trip[2], "1")
-            db.session.add(triple)
-            db.session.commit()
+            if self.sub_type == 'rdf':
+                triple = Triple(self.id, trip[0], trip[1], trip[2], "1")
+                self.triple2DB(triple)
+
+            elif self.sub_type == 'sparql':
+                for t in trip:
+                    triple = Triple(self.id, t[0], t[1], t[2], "1")
+                    self.triple2DB(triple)
+
         for trip in removed:
-            triple = Triple(self.id, trip[0], trip[1], trip[2], "0")
+            if self.sub_type == 'rdf':
+                triple = Triple(self.id, trip[0], trip[1], trip[2], "0")
+                self.triple2DB(triple)
+
+            elif self.sub_type == 'sparql':
+                for t in trip:
+                    triple = Triple(self.id, t[0], t[1], t[2], "0")
+                    self.triple2DB(triple)
+
+    def triple2DB(self, triple, retries=0):
+        # Don't try this at home kids
+        try:
             db.session.add(triple)
             db.session.commit()
+        except:
+            time.sleep(0.2)
+            retries += 1
+            if retries < 10:
+                self.triple2DB(triple, retries)
+            else:
+                print "Something where wrong, please try not using both RDF and SPARQL subscriptions at the same time!"
 
 
 # DECORATORS
@@ -163,15 +208,30 @@ def check_ip(f):
 
 # TEMPLATE TAGS
 
-# Tags for removing the name-space and coloring
 @app.context_processor
 def triple_processor():
+    """
+    Template tags for removing name-space and for coloring
+
+    :return dict: removeNS, colorSingle
+    """
+
     def removeNS(single):
+        """
+
+        :param single: A single from a triple
+        :return single: Single without name-space
+        """
         if "#" in single:
             return single.partition("#")[2]
         return single
 
     def colorSingle(single):
+        """
+
+        :param single: A single from a triple
+        :return single: Single without namespace and colored
+        """
         if "#" in single:
             ns,obj = single.split("#")
             return "<span class='single_ns'>"+ns+"#</span><span class='single_obj'>"+obj+"</span>".encode('ascii', 'xmlcharrefreplace')
@@ -179,19 +239,26 @@ def triple_processor():
 
     return dict(removeNS=removeNS, colorSingle=colorSingle)
 
-
-
 # VIEW FUNCTIONS
 
-# Index page
 @app.route('/')
 def index():
+    """
+    Index view
+
+    :return template: index.html
+    """
     return render_template('home.html')
 
-# Tests a connection to the SIB and sets the correct session vars
-# Using a global SH var for getting the same SIB handler across functions
+#
 @app.route('/sib/connection', methods=['POST', 'GET'])
 def sibConnection():
+    """
+    Tests a connection to the SIB and sets the correct session vars
+    Using a global SH var for getting the same SIB handler across functions
+
+    :return: redirect: index
+    """
     global SH
     if request.method == 'POST':
         s = SIBHandler(request.form['sib_ip'])
@@ -212,18 +279,26 @@ def sibConnection():
     return redirect(url_for('index'))
 
 
-# List all triples
 @app.route('/list/all/')
 @check_ip
 def listAll():
+    """
+    View for listing all triples
+
+    :return template: list_all.html
+    """
     s = SIBHandler(session['sib_ip'])
     entries = s.getAllTriples()
     return render_template('list_all.html', entries=entries)
 
-# Get all triples as JSON
 @app.route('/get/all/')
 @check_ip
 def getAll():
+    """
+    View for getting all triples as JSON
+
+    :return json: success, triples, pred
+    """
     triples={'subjects':["None"], 'predicates':["None"], 'objects':["None"]}
     s = SIBHandler(session['sib_ip'])
     entries = s.getAllTriples(limit=400)
@@ -238,10 +313,15 @@ def getAll():
 
     return jsonify(success=True, triples=triples, pred=triples['predicates'])
 
-# List all classes
 @app.route('/list/classes/')
 @check_ip
 def listClasses():
+    """
+    View for listing all classes
+
+    :return template: list_classes.html
+    :return vars: entries
+    """
     s = SIBHandler(session['sib_ip'])
     entries = s.getAllClasses()
     return render_template('list_classes.html', entries=entries)
@@ -250,14 +330,25 @@ def listClasses():
 @app.route('/list/properties/')
 @check_ip
 def listProperties():
+    """
+    View for listing all classes
+
+    :return: template: list_properties
+    :return vars: entries
+    """
     s = SIBHandler(session['sib_ip'])
     entries = s.getAllProperties()
     return render_template('list_properties.html', entries=entries)
 
-# List class tree
 @app.route('/list/classes/tree')
 @check_ip
 def listClassesFull():
+    """
+    View for listing the class tree
+
+    :return template: list_classes_tree.html
+    :return vars: entries
+    """
     s = SIBHandler(session['sib_ip'])
     entries = s.getFullClassInfo()
     return render_template('list_classes_tree.html', entries=entries)
@@ -266,6 +357,11 @@ def listClassesFull():
 @app.route('/object/remove', methods=['POST'])
 @check_ip
 def objectRemove():
+    """
+    View for removing a object from the class tree
+
+    :return json: suceess
+    """
     success = False
     if request.method == 'POST':
         object = request.form.get('object', False)
@@ -281,6 +377,12 @@ def objectRemove():
 @app.route('/query', methods=['GET', 'POST'])
 @check_ip
 def querySIB():
+    """
+    View for showing the query page
+
+    :return template: querySIB.html
+    :return vars: table_header, entries, error, query, time, triples
+    """
     table_header = False
     entries = False
     error = False
@@ -297,10 +399,15 @@ def querySIB():
     return render_template('querySIB.html', table_header=table_header, entries=entries, error=error, query=query, time=str(time), triples=triples)
 
 
-# List subscriptions and creates subscriptions
 @app.route('/subscriber', methods=['GET', 'POST'])
 @check_ip
 def subscriber():
+    """
+    View for listing and creating subscriptions
+
+    :return template: subscriber.html
+    :return vars: subscriptions
+    """
     global SH
     success = False
     if request.method == 'POST':
@@ -318,14 +425,18 @@ def subscriber():
 
         s.subscribe(subject, predicate, object, uuid4())
 
-    subscriptions = Subscription.query.all()
+    subscriptions = Subscription.query.filter_by(sub_type='rdf')
 
     return render_template('subscriber.html', subscriptions=subscriptions)
 
-# Close an existing subscription
 @app.route('/subscription/close', methods=['POST'])
 @check_ip
 def subscription_close():
+    """
+    View for closing a subscription
+
+    :return json: success
+    """
     global SH
     success = False
     if request.method == 'POST':
@@ -349,10 +460,14 @@ def subscription_close():
 
     return jsonify(success=success)
 
-# Updates the subscription list, returns JSON
 @app.route('/subscriber/update', methods=['GET'])
 @check_ip
 def subscriber_update():
+    """
+    View for updating the subscription list
+
+    :return json: success subscriptions
+    """
     success = False
     response = []
 
@@ -362,10 +477,18 @@ def subscriber_update():
 
     return jsonify(success=success, subscriptions=response)
 
-# Returns added triples as a paginated page
 @app.route('/subscriber/<string:subscription>/<string:triple_type>/<int:page>', methods=['GET'])
 @check_ip
 def subscriber_triples(subscription=False, triple_type="added", page=1):
+    """
+    Shows added and removed triples in a subscription
+
+    :param subscription: Subscription
+    :param triple_type: Triple type, 'added' or 'removed'
+    :param page: Page in pagination
+    :return template: subscriber_triples.html
+    :return vars: triples, subscription, triple_type
+    """
     if triple_type == "added":
         triples = Triple.query.filter_by(subscription=subscription, triple_type="1").paginate(page,20,False)
     else:
@@ -375,11 +498,34 @@ def subscriber_triples(subscription=False, triple_type="added", page=1):
 
     return render_template('subscriber_triples.html', triples=triples, subscription=subscription, triple_type=triple_type)
 
+@app.route('/subscriber/sparql', methods=['GET', 'POST'])
+@check_ip
+def subscriber_sparql():
+    """
+    View for subscribing to SPARQL queries
 
-# Benchmarking the SIB
+    """
+    global SH
+
+    if request.method == 'POST':
+        s = SH
+        sparql_query = request.form['subscription']
+        s.subscribe_sparql(sparql_query, uuid4())
+
+    subscriptions = Subscription.query.filter_by(sub_type="sparql")
+
+    return render_template('subscriber_sparql.html', subscriptions=subscriptions)
+
+
 @app.route('/sib/info', methods=['GET', 'POST'])
 @check_ip
 def sibInfo():
+    """
+    View for benchmarking the SIB
+
+    :return template: sib_info
+    :return vars: info
+    """
     info = False
     if request.method == 'POST':
         s = SIBHandler(session['sib_ip'])
@@ -391,14 +537,25 @@ def sibInfo():
 # For file uploads
 @app.route('/ontologies/<filename>')
 def uploaded_file(filename):
+    """
+    View for returning a file
+
+    :param filename: Filename of a uploaded file
+    :return: file: File specified in 'filename'
+    """
     return send_from_directory(app.config['UPLOAD_FOLDER'],
         filename)
 
-# Maintaining the SIB
 @app.route('/sib/maintenance', methods=['GET', 'POST'])
 @check_ip
 def sib_maintenance():
+    """
+    View for showing the maintenance page
 
+    :return onPOST: json: results
+    :return onGET: template: sib_maintenance.html
+    :return onGET: vars: ontologies, sh_info
+    """
     ontologies = os.listdir(UPLOAD_FOLDER)
 
     s = SIBHandler(session['sib_ip'])
@@ -431,6 +588,11 @@ def sib_maintenance():
 @app.route('/sib/maintenance/get/uploads', methods=['GET', 'POST'])
 @check_ip
 def sib_maintenance_get_uploads():
+    """
+    View for getting all uploaded files
+
+    :return json: success, ontologies
+    """
     ontologies = os.listdir(UPLOAD_FOLDER)
     ontologies = {'files':ontologies}
     return jsonify(success=True, ontologies=ontologies)
@@ -438,6 +600,11 @@ def sib_maintenance_get_uploads():
 @app.route('/sib/maintenance/get/info', methods=['GET'])
 @check_ip
 def sib_maintenance_get_info():
+    """
+    View for getting info about the SIB
+
+    :return json: success, info
+    """
     s = SIBHandler(session['sib_ip'])
     count = s.countAllTriples()
 
@@ -459,6 +626,11 @@ app.secret_key = os.urandom(24)
 
 @app.route('/changelog')
 def changelog():
+    """
+    View for showing the changelog
+
+    :return template: changelog.html
+    """
     return render_template('changelog.html')
 
 if __name__ == '__main__':

@@ -89,6 +89,11 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n";
             editor.setValue(q_prefixes+q);
         });
 
+        $("#q_class_instances").click(function(e){
+            q = "SELECT  ?class (COUNT(?s) AS ?count ) { ?s a ?class } GROUP BY ?class ORDER BY ?count";
+            editor.setValue(q_prefixes+q);
+        });
+
 
 
         $("#query_btn").click(function(){
@@ -128,6 +133,8 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n";
                     <li><a href="#" id="q_advanced">"Advanced" query</a></li>
                     <li><a href="#" id="q_objects">All "objects"</a></li>
                     <li><a href="#" id="q_count">Count triples</a></li>
+                    <li><a href="#" id="q_class_instances">Count instances of classes</a></li>
+
                 </ul>
             </div>
         </div>

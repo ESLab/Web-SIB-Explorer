@@ -111,10 +111,20 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
             id = str(id)
 
         st = self.CreateSubscribeTransaction(self.ss_handle)
-        st.subscribe_rdf([Triple(s, p, o)], explorer.SubHandler(subject=str(s), predicate=str(p), object=str(o), id=id))
+        st.subscribe_rdf([Triple(s, p, o)], explorer.SubHandler(subject=str(s), predicate=str(p), object=str(o), id=id, sub_type='rdf'))
         self.subscriptions.append({'subscription':st, 'id':id})
 
-        #return True
+        return st
+
+    def subscribe_sparql(self, sparql_query,id=None):
+
+        if id:
+            id = str(id)
+
+        st = self.CreateSubscribeTransaction(self.ss_handle)
+        st.subscribe_sparql(sparql_query, explorer.SubHandler(sparql_query=sparql_query, id=id, sub_type='sparql'))
+        self.subscriptions.append({'subscription':st, 'id':id})
+
         return st
 
     def unsubscribe(self, id):

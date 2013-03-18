@@ -2,6 +2,42 @@
 
 {% block nav_subscriber %}class="active"{% endblock %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/codemirror.css">
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/codemirror.js"></script>
+<script src="/static/js/sparql.js"></script>
+<script>
+
+    $('.code').each(function() {
+
+        var $this = $(this),
+                $code = $this.text();
+
+        $this.empty();
+
+        var myCodeMirror = CodeMirror(this, {
+            value: $code,
+            mode: 'application/x-sparql-query',
+            lineNumbers: !$this.is('.inline'),
+            readOnly: true,
+            matchBrackets: true
+        });
+
+        //myCodeMirror.setSize(560,200)
+
+    });
+
+
+
+
+
+</script>
+{% endblock %}
+
+
 {% block container %}
     <div class="row" xmlns="http://www.w3.org/1999/html">
     <div class="span10">
@@ -11,8 +47,27 @@
 
     <div class="row">
         <div class="span12">
+            {% if subscription.sub_type == 'sparql' %}
+                <div class="accordion" id="accordion2">
+                    <div class="accordion-group">
+                        <div class="accordion-heading">
+                            <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapseOne">
+                                Query
+                            </a>
+                        </div>
+                        <div id="collapseOne" class="accordion-body collapse">
+                            <div class="accordion-inner">
+                                <div class="code">{{ subscription.sparql_query }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
             <h5>Subscription: {{ subscription.s }} {{ subscription.p }} {{ subscription.o }}</h5>
+            {% endif %}
+            <h5> Type: {{ subscription.sub_type|capitalize }}</h5>
             <h5>Hits: <a href="{{ url_for('subscriber_triples', page = 1, subscription=subscription.id, triple_type="added") }}"><span class="subscription-added">{{ subscription.added }}</span></a> / <a href="{{ url_for('subscriber_triples', page = 1, subscription=subscription.id, triple_type="removed") }}"><span class="subscription-removed">{{ subscription.removed }}</span></a></h5>
+
         </div>
     </div>
     <div class="row">
