@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+
+{% block nav_subscriber%}active{% endblock %}
+
+
+{% block extra_css %}
+    <link rel="stylesheet" href="/static/css/codemirror.css">
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/codemirror.js"></script>
+<script src="/static/js/sparql.js"></script>
+
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("subscription"), {
+        mode: "application/x-sparql-query",
+        tabMode: "indent",
+        matchBrackets: true
+    });
+
+    $('.code').each(function() {
+
+        var $this = $(this),
+        $code = $this.text();
+
+        $this.empty();
+
+        var myCodeMirror = CodeMirror(this, {
+            value: $code,
+            mode: 'application/x-sparql-query',
+            //lineNumbers: !$this.is('.inline'),
+            readOnly: true,
+            //height: '50px',
+            matchBrackets: true
+        });
+
+        myCodeMirror.setSize("100%",200)
+
+    });
+
+
+    $('.close_subscription').click(function(e){
+        var sub_id = $(this).attr('id');
+
+        var postdata = {
+            'subscription_id': sub_id
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/subscription/close",
+            data: postdata,
+            success: function (data) {
+                $("#sub_"+sub_id).fadeOut(400);
+            }
+        });
+
+    });
+
+
+    $("#how_done").popover({
+        html: true,
+        title: "<h4>How is it done</h4>",
+        content: $('#how_done_text').html(),
+        trigger: "hover",
+        placement: 'bottom'
+    })
+</script>
+{% endblock %}
+
+{% block container %}
+    <div class="row">
+        <div class="span6">
+            <h2>SPARQL Subscriber:</h2>
+        </div>
+        <div class="span2 pull-right">
+            <span id="how_done" class="label label-info">How is it done <i class="icon-question-sign icon-white"></i></span>
+            <div id="how_done_text" style="display: none">
+                <h5>Update frequency</h5>
+                This page DOES NOT update as the RDP subscriber. This feature will be added later!
+                <h5>SPARQL Subscriptions</h5>
+                Write the subscriptions as you would write normal SPARQL queries.
+                <h5>Results</h5>
+                See the result by clicking on the green and red numbers under to the subscription.
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            <form action="/subscriber/sparql" accept-charset="utf-8" method="post">
+                <textarea name="subscription" id="subscription" class="span12" rows="10">{% if not query %}
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT ?s
+    WHERE { ?s rdf:type ?o }
+        {% else %}{{query}}
+                {% endif %}
+                </textarea>
+                <button id="query_btn" type="submit" class="btn btn-primary">Subscribe</button>
+                <img style="display: none" id="spinner" src="/static/img/ajax-loader.gif"/> {% if time and triples %}<span id="query_time">Query took: <strong>{{ time|truncate(8,True,'') }}</strong> s | Got: <strong>{{ triples }}</strong> triple(s)</span>{% endif %}
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="span12">
+            {% for subscription in subscriptions %}
+                <div class="span5" id="sub_{{subscription.id}}">
+                    Subscription:
+                    <div class="code">{{ subscription.sparql_query}} </div>
+                    <a href="{{ url_for('subscriber_triples', page = 1, subscription=subscription.id, triple_type="added") }}"> <span class="subscription-added" id="added">{{ subscription.added }}</span>  </a>/<a href="{{ url_for('subscriber_triples', page = 1, subscription=subscription.id, triple_type="removed") }}"> <span class="subscription-removed" id="removed">{{ subscription.removed }}</span> </a> - <a href="#" class="close_subscription" id="{{ subscription.id }}"><i class="icon-remove"></i></a>
+
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+{% endblock %}
